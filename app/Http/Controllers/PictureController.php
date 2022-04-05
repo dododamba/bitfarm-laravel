@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\Picture as PictureResource;
-use App\Picture;
+use App\Models\Picture;
 use Illuminate\Http\Request;
 
 /*

@@ -36,7 +36,10 @@ class Site extends Resource
             'lat'=>$this->lat,
             'lng'=>$this->lng,
             'description'=>$this->description,
+            'region' => new Region($this->region),
             'id' => $this->id,
+            'pompes' => Pomp::collection($this->pompes),
+            'typeCultures' => TypeCulture::collection($this->typeCultures),
             'slug' => $this->slug,
             'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
             'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')

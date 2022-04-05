@@ -135,30 +135,35 @@ class ApiAuthController extends Controller
     public function login (Request $request) {
 
 
+
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string',
         ]);
-        if ($validator->fails())
-        {
+
+        if ($validator->fails()){
             return response(['status' => false,'status' => false,'errors'=>$validator->errors()->all()], 200);
         }
+
         $user = User::where('email', $request->email)->first();
         if ($user) {
+
             if (Hash::check($request->password, $user->password)) {
+
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = [
                     'status' => true,
                     'token' => $token,
-                    'user' => new UserResource($user)
+                     'user' => new UserResource($user)
                 ];
                 return response($response, 200);
             } else {
-                $response = ['status' => false,"errors" => "Password mismatch"];
+                $response = ['status' => false,"errors" => "Verifiez votre email ou votre mot de pass !"];
                 return response($response, 200);
             }
         } else {
-            $response = ['status' => false,"errors" =>'User does not exist'];
+            $response = ['status' => false,"errors" =>'erreur identifiants ! '];
             return response($response, 200);
         }
     }

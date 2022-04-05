@@ -34,6 +34,7 @@ class Country extends Resource
             'indicatif'=>$this->indicatif,
             'id' => $this->id,
             'slug' => $this->slug,
+            'regions'=>Region::collection($this->regions),
             'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
             'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')
 

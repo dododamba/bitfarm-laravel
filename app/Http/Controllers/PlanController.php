@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\Plan as PlanResource;
-use App\Plan;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 
 /*
@@ -57,10 +57,24 @@ class PlanController extends Controller
    */
   public function store(Request $request)
   {
-     if (Plan::create($request->all())) {
+
+
+
+
+     if (Plan::create([
+       'name' => $request->name,
+       'description' => $request->description,
+       'price' => $request->price,
+       'promotionDueDate' => $request->promotionDueDate,
+       'startDate' => $request->startDate,
+       'dueDate' => $request->dueDate,
+       'promotionPrice' => $request->promotionPrice,
+       'project_id'=> $request->project['id']
+     ])) {
                 return response()->json(
                     [
-                        'message' => ' Plan stored successful',
+                        'message' => ' Plan crée avec succès !'
+                        ,
                         'status' => true
                      ],200,['Content-Type'=>'application/json']);
 

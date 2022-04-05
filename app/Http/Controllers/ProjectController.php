@@ -9,6 +9,9 @@ use App\Models\Project;
 use App\Models\User;
 use App\Models\Picture;
 
+use App\Models\Site;
+
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -122,7 +125,7 @@ class ProjectController extends Controller
                     [
                         'project'=> new ProjectResource(Project::where('slug',$slug)->first()),
                         'message'=>'detail Project',
-                        'status' => false
+                        'status' => true
                     ],
                     200,
                     ['Content-Type'=>'application/json']
@@ -130,6 +133,7 @@ class ProjectController extends Controller
           }
 
         return response()->json([
+          'status' => false,
             'message' => 'echec ,
             Project does not exist'],
             404,
@@ -227,6 +231,26 @@ class ProjectController extends Controller
 
 
       }
+
+
+
+
+   public function addSiteToProject(Request $request){
+       $site = Site::find($request->site['id']);
+       $project = Project::find($request->project['id']);
+
+       if ($project->sites()->attach($site)) {
+         return response()->json([
+             'message' =>'Site ajouté avec succès au projet !',
+             'status' => true
+           ],200,['Content-Type'=>'application/json']);
+       }
+
+       return response()->json([
+           'message' =>'Erreur  !',
+           'status' => false
+         ],200,['Content-Type'=>'application/json']);
+   }
 
 
 

@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\Site as SiteResource;
-use App\Site;
+use App\Models\Site;
+use App\Models\Region;
+use App\Models\TypeCulture;
+use App\Models\Pomp;
+
 use Illuminate\Http\Request;
 
 /*
@@ -34,46 +38,54 @@ class SiteController extends Controller
   public function index()
   {
 
-              if(!SiteResource::collection(Site::all())->isEmpty()){
+    return response()->json(
+        [
+            'content'=> SiteResource::collection(Site::orderBy('name','asc')->get()),
+            'message'=>'list of Sites'
+        ],200,['Content-Type'=>'application/json']);
+  }
+
+
+
+
+
+
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+
+
+       if (Site::create(
+         [
+            'name' => $request->name,
+            'area' => $request->area,
+            'areaUnity' => $request->areaUnity,
+            'description' => $request->description,
+            'lng' => $request->lng,
+            'lat' => $request->lat,
+            'region_id' => $request->region['id'] ,
+            'slug'=> $request->slug,
+         ]
+       )) {
                   return response()->json(
                       [
-                          'content'=> SiteResource::collection(Site::all()),
-                          'message'=>'list of Sites'
-                      ],200,['Content-Type'=>'application/json']);
+                          'message' => ' Site stored successful',
+                          'status' => true
+                       ],200,['Content-Type'=>'application/json']);
 
               }
-
-    return response()->json(['message'=>'Sites empty !']);
-
-  }
-
-
-
-
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @return Response
-   */
-  public function store(Request $request)
-  {
-     if (Site::create($request->all())) {
-                return response()->json(
-                    [
-                        'message' => ' Site stored successful',
-                        'status' => true
-                     ],200,['Content-Type'=>'application/json']);
-
-            }
-     return response()->json(
-         [
-             'message'=>'store Site failed !',
-             'status' => false
-        ],200);
-  }
-
-
-
+       return response()->json(
+           [
+               'message'=>'store Site failed !',
+               'status' => false
+          ],200);
+    }
 
   /**
    * Display the specified resource.
@@ -87,9 +99,9 @@ class SiteController extends Controller
           if (Site::where('slug',$slug)->first()){
                 return response()->json(
                     [
-                        'content'=> new SiteResource(Site::where('slug',$slug)->first()),
+                        'site'=> new SiteResource(Site::where('slug',$slug)->first()),
                         'message'=>'detail Site',
-                        'status' => false
+                        'status' => true
                     ],
                     200,
                     ['Content-Type'=>'application/json']
@@ -97,9 +109,10 @@ class SiteController extends Controller
           }
 
         return response()->json([
-            'message' => 'echec ,
-            Site does not exist'],
-            404,
+            'message' => 'echec Site does not exist',
+            'status' => true
+            ],
+            200,
            ['Content-Type'=>'application/json']);
   }
 
@@ -161,6 +174,45 @@ class SiteController extends Controller
 
        return response()->json(['message' => ' Site does not exist !'],404,['Content-Type'=>'application/json']);
    }
+
+
+
+
+      public function addTypeToSite(Request $request){
+          $site = Site::find($request->site['id']);
+          $typeCulture = TypeCulture::find($request->typeCulture['id']);
+
+
+
+            return response()->json([
+                'message' =>'Type de culture ajouté avec succès au site !',
+                'status' => true
+              ],200,['Content-Type'=>'application/json']);
+          
+      }
+
+
+
+
+
+
+         public function addPompeToSite(Request $request){
+             $site = Site::find($request->site['id']);
+             $typeCulture = Pomp::find($request->pomp['id']);
+
+             if ($site->pompes()->attach($site)) {
+               return response()->json([
+                   'message' =>'Pompe ajouté avec succès au site !',
+                   'status' => true
+                 ],200,['Content-Type'=>'application/json']);
+             }
+
+             return response()->json([
+                 'message' =>'Erreur  !',
+                 'status' => false
+               ],200,['Content-Type'=>'application/json']);
+         }
+
 
  /* --Generated with ❤ by slugger---*/
 

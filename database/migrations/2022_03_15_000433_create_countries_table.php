@@ -32,6 +32,7 @@ class CreateCountriesTable extends Migration
                 $table->string('name')->nullable();
                 $table->string('iso')->nullable();
                 $table->integer('indicatif')->nullable();
+                $table->integer('country_id')->nullable();
 
                 $table->string('slug')->nullable();
                 $table->timestamps();

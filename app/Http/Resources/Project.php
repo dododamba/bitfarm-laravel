@@ -38,7 +38,9 @@ class Project extends Resource
             'startDate'=>Carbon::createFromTimeStamp(strtotime($this->startDate))->diffForHumans() ,
             'id' => $this->id,
             'slug' => $this->slug,
+            'plans' => Plan::Collection($this->plans) ,
             'entreprise' => new EnterpriseResource($this->enterprise),
+            'sites' =>Site::collection($this->sites),
             'photos' => Picture::collection($this->pictures),
             'createdAt' => Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans() ,
             'updatedAt' => Carbon::createFromTimeStamp(strtotime($this->updated_at))->diffForHumans()

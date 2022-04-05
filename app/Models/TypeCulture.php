@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Model   TypeCulture
@@ -22,7 +22,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TypeCulture extends Model
 {
 
-    
+
+  protected $table = 'typecultures';
+
 
     /**
      * Attributes that should be mass-assignable.

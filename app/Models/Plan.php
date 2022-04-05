@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Model   Plan
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Plan extends Model
 {
 
-    
+
 
     /**
      * Attributes that should be mass-assignable.
@@ -33,6 +33,18 @@ class Plan extends Model
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+
+        /**
+         *
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+         */
+
+        public function projet()
+        {
+          return $this->belongsTo(Project::class,'project_id');
+        }
+
 
  /* --Generated with ❤ by Slugger ---*/
 

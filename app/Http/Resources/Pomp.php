@@ -30,7 +30,7 @@ class Pomp extends Resource
     {
         return [
             'name'=>$this->name,
-            'site_id'=>$this->site_id,
+            'site'=>new Site($this->site),
             'atmospheric_pression'=>$this->atmospheric_pression,
             'temperature'=>$this->temperature,
             'lat'=>$this->lat,

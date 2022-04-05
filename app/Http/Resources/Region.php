@@ -32,6 +32,8 @@ class Region extends Resource
             'name'=>$this->name,
             'description'=>$this->description,
             'id' => $this->id,
+            'country' => new CountryResource($this->country),
+            'sites' => SiteResource::collection($this->sites),
             'slug' => $this->slug,
             'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
             'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')

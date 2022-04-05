@@ -69,6 +69,19 @@ class Project extends Model
     }
 
 
+
+        /**
+         * Get all of the plans for project
+         *
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany
+         */
+
+        public function plans()
+        {
+          return $this->hasMany(Plan::class,'project_id');
+        }
+
+
     /**
      * Get all of the sites for the project
      *

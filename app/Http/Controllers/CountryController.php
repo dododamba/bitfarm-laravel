@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\Country as CountryResource;
-use App\Country;
+use App\Models\Country;
+use App\Models\Region;
+
 use Illuminate\Http\Request;
 
 /*
@@ -34,16 +36,14 @@ class CountryController extends Controller
   public function index()
   {
 
-              if(!CountryResource::collection(Country::all())->isEmpty()){
                   return response()->json(
                       [
                           'content'=> CountryResource::collection(Country::all()),
                           'message'=>'list of Countrys'
                       ],200,['Content-Type'=>'application/json']);
 
-              }
 
-    return response()->json(['message'=>'Countrys empty !']);
+
 
   }
 
@@ -57,7 +57,12 @@ class CountryController extends Controller
    */
   public function store(Request $request)
   {
-     if (Country::create($request->all())) {
+     if (Country::create([
+            'indicatif'=> $request->indicatif,
+            'iso'=> $request->iso,
+            'name'=> $request->name,
+            'slug'=> $request->slug
+       ])) {
                 return response()->json(
                     [
                         'message' => ' Country stored successful',
@@ -72,6 +77,35 @@ class CountryController extends Controller
         ],200);
   }
 
+
+
+      /**
+       * Store a newly created resource in storage.
+       *
+       * @return Response
+       */
+      public function addRegion(Request $request)
+      {
+         $data = [
+           'name'  => $request->region['name'],
+           'slug'  => $request->region['slug'],
+           'country_id'  => $request->country['id'],
+
+         ];
+         if (Region::create($data)) {
+                    return response()->json(
+                        [
+                            'message' => 'Region ajouté avec succès !',
+                            'status' => true
+                         ],200,['Content-Type'=>'application/json']);
+
+                }
+         return response()->json(
+             [
+                 'message'=>'Echec !',
+                 'status' => false
+            ],200);
+      }
 
 
 

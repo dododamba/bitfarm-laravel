@@ -43,8 +43,31 @@ class Site extends Model
 
     public function pompes()
     {
-      return $this->hasMany(Pomp::class);
+      return $this->hasMany(Pomp::class,'id','site_id');
     }
+
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function typeCultures()
+    {
+      return $this->belongsToMany(TypeCulture::class)->withPivot('site_id ','type_culture_id');
+    }
+
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+
+    public function region()
+    {
+      return $this->belongsTo(Region::class);
+    }
+
 
  /* --Generated with ❤ by Slugger ---*/
 

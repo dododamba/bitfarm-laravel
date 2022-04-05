@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\TypeCulture as TypeCultureResource;
-use App\TypeCulture;
+use App\Models\TypeCulture;
 use Illuminate\Http\Request;
 
 /*
@@ -34,16 +34,11 @@ class TypeCultureController extends Controller
   public function index()
   {
 
-              if(!TypeCultureResource::collection(TypeCulture::all())->isEmpty()){
-                  return response()->json(
-                      [
-                          'content'=> TypeCultureResource::collection(TypeCulture::all()),
-                          'message'=>'list of TypeCultures'
-                      ],200,['Content-Type'=>'application/json']);
-
-              }
-
-    return response()->json(['message'=>'TypeCultures empty !']);
+    return response()->json(
+        [
+            'content'=> TypeCultureResource::collection(TypeCulture::orderBy('name','asc')->get()),
+            'message'=>'list of TypeCultures'
+        ],200,['Content-Type'=>'application/json']);
 
   }
 
@@ -60,7 +55,7 @@ class TypeCultureController extends Controller
      if (TypeCulture::create($request->all())) {
                 return response()->json(
                     [
-                        'message' => ' TypeCulture stored successful',
+                        'message' => ' Type de Culture ajouté avec succès !',
                         'status' => true
                      ],200,['Content-Type'=>'application/json']);
 

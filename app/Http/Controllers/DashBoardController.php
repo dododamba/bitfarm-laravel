@@ -23,19 +23,21 @@ class DashBoardController extends Controller
     {
 
       $data = [
-         'projects' => ProjectResource::collection(Project::orderBy('id','desc')->get()),
+        'projects' => ProjectResource::collection(Project::orderBy('id','desc')->get()),
          'plans' =>  PlanResource::collection(Plan::orderBy('id','desc')->get()),
-         'varieties' => '', //TypeCultureResource::collection(TypeCulture::orderBy('id','desc')->get()),
-         'sites' =>  SiteResource::collection(Site::orderBy('id','desc')->get()),
-         'countries' =>  CountryResource::collection(Country::orderBy('id','desc')->get()),
+        'varieties' => TypeCultureResource::collection(TypeCulture::orderBy('id','desc')->get()),
+        'sites' =>  SiteResource::collection(Site::orderBy('id','desc')->get()),
+        'countries' =>  CountryResource::collection(Country::orderBy('id','desc')->get()),
       ];
 
 
-      return response()->json(
-          [
-              '_embeded'=> $data,
-              'message'=>'Mobile dashboard project',
-              'status' => true,
-          ],200,['Content-Type'=>'application/json']);
+       return response()->json(
+           [
+               '_embeded'=> $data,
+               'message'=>'Mobile dashboard project',
+               'status' => true,
+           ],200,['Content-Type'=>'application/json']);
+
+
     }
 }

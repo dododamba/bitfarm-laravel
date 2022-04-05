@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\Partner as PartnerResource;
-use App\Partner;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 
 /*

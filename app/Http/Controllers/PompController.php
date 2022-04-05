@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\Pomp as PompResource;
-use App\Pomp;
+use App\Models\Pomp;
 use Illuminate\Http\Request;
 
 /*
@@ -34,16 +34,11 @@ class PompController extends Controller
   public function index()
   {
 
-              if(!PompResource::collection(Pomp::all())->isEmpty()){
-                  return response()->json(
-                      [
-                          'content'=> PompResource::collection(Pomp::all()),
-                          'message'=>'list of Pomps'
-                      ],200,['Content-Type'=>'application/json']);
-
-              }
-
-    return response()->json(['message'=>'Pomps empty !']);
+    return response()->json(
+        [
+            'content'=> PompResource::collection(Pomp::all()),
+            'message'=>'list of Pomps'
+        ],200,['Content-Type'=>'application/json']);
 
   }
 
@@ -57,7 +52,13 @@ class PompController extends Controller
    */
   public function store(Request $request)
   {
-     if (Pomp::create($request->all())) {
+     if (Pomp::create(
+        [
+          'name' => $request->name,
+          'site_id' => $request->site['id'],
+          'slug' => $request->slug
+      ]
+     )) {
                 return response()->json(
                     [
                         'message' => ' Pomp stored successful',

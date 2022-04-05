@@ -32,16 +32,15 @@ class Plan extends Resource
             'name'=>$this->name,
             'description'=>$this->description,
             'price'=>$this->price,
-            'promotionDueDate'=>$this->promotionDueDate,
-            'promotionDueDate'=>$this->promotionDueDate,
-            'startDate'=>$this->startDate,
-            'dueDate'=>$this->dueDate,
+            'promotionDueDate'=>Carbon::createFromTimeStamp(strtotime($this->promotionDueDate))->diffForHumans(),
+            'startDate'=>Carbon::createFromTimeStamp(strtotime($this->startDate))->diffForHumans() ,
+            'dueDate'=>Carbon::createFromTimeStamp(strtotime($this->dueDate))->diffForHumans() ,
             'promotionPrice'=>$this->promotionPrice,
-            'project_id'=>$this->project_id,
+            'project'=>new ProjectResource($this->projet),
             'id' => $this->id,
             'slug' => $this->slug,
-            'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
-            'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')
+            'createdAt' => Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans() ,
+            'updatedAt' => Carbon::createFromTimeStamp(strtotime($this->updated_at))->diffForHumans()
 
 
         ];

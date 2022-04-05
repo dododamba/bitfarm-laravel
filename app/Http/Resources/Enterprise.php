@@ -44,7 +44,7 @@ class Enterprise extends Resource
             'lat'=>$this->lat,
             'id' => $this->id,
             'slug' => $this->slug,
-            'projects' => Project::collection($this->projects),
+            //'projects' => Project::collection($this->projects),
             'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
             'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')
 

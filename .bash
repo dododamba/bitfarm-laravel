@@ -19,8 +19,12 @@ php artisan make:migration:pivot sites types_cultures
 php artisan make:migration:pivot projects partners
 php artisan make:migration:pivot projects sites
 
+php artisan make:migration:pivot plans type_cultures
 
+php artisan make:migration:pivot sites typecultures
 
-
-				
-
+php artisan crud:generate Post --fields="content:text,user_id:integer"
+php artisan crud:generate Like --fields="user_id:integer,post_id:integer"
+php artisan crud:generate Comment --fields="content:text,user_id:integer,post_id:integer"
+php artisan crud:generate Share --fields="user_id:integer,post_id:integer,shared_on:integer"
+php artisan crud:generate View --fields="user_id:integer,post_id:integer"

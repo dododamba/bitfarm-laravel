@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Http\Resources\Region as RegionResource;
-use App\Region;
+use App\Models\Region;
 use Illuminate\Http\Request;
 
 /*

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Model   Country
@@ -22,17 +22,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Country extends Model
 {
 
-    
+
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'iso', 'indicatif'];
+    protected $fillable = ['name', 'iso', 'indicatif', 'country_id','slug'];
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+
+    /**
+     * Get all of the regions for the country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function regions()
+    {
+        return $this->hasMany(Region::class);
+    }
+
 
  /* --Generated with ❤ by Slugger ---*/
 
