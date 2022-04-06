@@ -28,3 +28,5 @@ php artisan crud:generate Like --fields="user_id:integer,post_id:integer"
 php artisan crud:generate Comment --fields="content:text,user_id:integer,post_id:integer"
 php artisan crud:generate Share --fields="user_id:integer,post_id:integer,shared_on:integer"
 php artisan crud:generate View --fields="user_id:integer,post_id:integer"
+
+php artisan crud:generate Ceritification  --fields="document:string,status:boolean,certified_at:date,user_id:integer"

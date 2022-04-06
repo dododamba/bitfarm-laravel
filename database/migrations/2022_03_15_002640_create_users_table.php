@@ -43,6 +43,7 @@ class CreateUsersTable extends Migration
 
                 $table->string('confirm_token')->nullable();
                 $table->string('reset_token')->nullable();
+                $table->boolean('account_is_configured')->nullable();
                 $table->timestamp('email_verified_at')->nullable();
                 $table->rememberToken();
 

@@ -43,7 +43,9 @@ class User  extends Authenticatable
         'password',
         'status',
         'telephone',
-        'enterprise_id'
+        'enterprise_id',
+        'account_is_configured',
+        'certification'
     ];
 
     use SoftDeletes;
@@ -81,7 +83,6 @@ class User  extends Authenticatable
 
 
     /**
-     * Get all of the roles for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -89,6 +90,17 @@ class User  extends Authenticatable
     public function enterprise()
     {
       return $this->hasOne(Enterprise::class);
+    }
+
+
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+
+    public function certification()
+    {
+      return $this->hasOne(Ceritification::class);
     }
 
  /* --Generated with ❤ by Slugger ---*/

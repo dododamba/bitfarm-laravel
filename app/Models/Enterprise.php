@@ -42,7 +42,8 @@ class Enterprise extends Model
           'user_id',
           'verified',
           'lng',
-          'lat'
+          'lat',
+          'enterprise_is_configured'
     ];
 
     use SoftDeletes;

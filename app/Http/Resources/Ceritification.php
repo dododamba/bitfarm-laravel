@@ -11,14 +11,14 @@ use Illuminate\Http\Resources\Json\JsonResource as Resource;
 |
 |--------------------------------------------------------------------------
 |
-| Resource   User
+| Resource   Ceritification
 |
 |
 |
 |*/
 
 
-class User extends Resource
+class Ceritification extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -29,20 +29,12 @@ class User extends Resource
     public function toArray($request)
     {
         return [
-            'firstName'=>$this->firstName,
-            'lastName'=>$this->lastName,
-            'avatar'=>$this->avatar,
-            'birth'=>$this->birth,
-            'country_id'=>$this->country_id,
-            'email'=>$this->email,
-            'password'=>$this->password,
-            'telephone'=>$this->telephone,
-            'roles'=>Role::collection($this->roles),
+            'document'=>$this->document,
+            'status'=>$this->status,
+            'certified_at'=>$this->certified_at,
+            'user_id'=>$this->user_id,
             'id' => $this->id,
-            'account_is_configured' => $this->account_is_configured,
             'slug' => $this->slug,
-            'certification' => new Ceritification($this->certification),
-            'enterprise' => new Enterprise($this->enterprise),
             'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
             'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')
 

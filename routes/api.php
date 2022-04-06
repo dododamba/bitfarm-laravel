@@ -45,7 +45,6 @@ Route::group(['middleware' => ['app.cors', 'json.response']], function () {
         Route::get('project/{slug}/get-enterprises-project', 'ProjectController@connectedUserProjects')->name('ki.api');;
         Route::get('dashboard-mobile', 'DashBoardController@index');
         Route::post('user/profile-picture-update', 'UserController@profile');
-        Route::post('user/profile-picture-update', 'UserController@profile');
 
         Route::get('brainTreeClientToken', 'PaypalController@clientToken');
 
@@ -55,6 +54,7 @@ Route::group(['middleware' => ['app.cors', 'json.response']], function () {
         Route::post('site/add-type-culture', 'SiteController@addTypeToSite');
         Route::post('site/add-pomp', 'SiteController@addPompeToSite');
         Route::post('project/add-site', 'ProjectController@addSiteToProject');
+        Route::post('user/certification-update', 'UserController@profileAccountSetting');
 
     });
 });

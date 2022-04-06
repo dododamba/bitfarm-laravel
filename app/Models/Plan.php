@@ -29,7 +29,17 @@ class Plan extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'price', 'promotionDueDate', 'promotionDueDate', 'startDate', 'dueDate', 'promotionPrice', 'project_id'];
+    protected $fillable = [
+      'name',
+      'description',
+      'price',
+      'promotionDueDate',
+      'promotionDueDate',
+      'startDate',
+      'dueDate',
+      'promotionPrice',
+      'slug', 
+      'project_id'];
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];

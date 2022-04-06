@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Resources\Plan as PlanResource;
-use App\Models\Plan;
+use App\Http\Resources\Ceritification as CeritificationResource;
+use App\Models\Ceritification;
 use Illuminate\Http\Request;
 
 /*
@@ -13,14 +13,14 @@ use Illuminate\Http\Request;
 |
 |--------------------------------------------------------------------------
 |
-| Controller   PlanController
+| Controller   CeritificationController
 |
 |
 |
 |*/
 
 
-class PlanController extends Controller
+class CeritificationController extends Controller
 {
 
 
@@ -33,17 +33,11 @@ class PlanController extends Controller
    */
   public function index()
   {
-
-              if(!PlanResource::collection(Plan::all())->isEmpty()){
-                  return response()->json(
-                      [
-                          'content'=> PlanResource::collection(Plan::all()),
-                          'message'=>'list of Plans'
-                      ],200,['Content-Type'=>'application/json']);
-
-              }
-
-    return response()->json(['message'=>'Plans empty !']);
+    return response()->json(
+        [
+            'content'=> CeritificationResource::collection(Ceritification::orderBy('id','desc')->get()),
+            'message'=>'list of Ceritifications'
+        ],200,['Content-Type'=>'application/json']);
 
   }
 
@@ -57,32 +51,17 @@ class PlanController extends Controller
    */
   public function store(Request $request)
   {
-
-
-
-
-     if (Plan::create([
-       'name' => $request->name,
-       'description' => $request->description,
-       'price' => $request->price,
-       'promotionDueDate' => $request->promotionDueDate,
-       'startDate' => $request->startDate,
-       'dueDate' => $request->dueDate,
-       'slug' => $request->slug,
-       'promotionPrice' => $request->promotionPrice,
-       'project_id'=> $request->project['id']
-     ])) {
+     if (Ceritification::create($request->all())) {
                 return response()->json(
                     [
-                        'message' => ' Plan crée avec succès !'
-                        ,
+                        'message' => ' Ceritification stored successful',
                         'status' => true
                      ],200,['Content-Type'=>'application/json']);
 
             }
      return response()->json(
          [
-             'message'=>'store Plan failed !',
+             'message'=>'store Ceritification failed !',
              'status' => false
         ],200);
   }
@@ -99,11 +78,11 @@ class PlanController extends Controller
    */
   public function show($slug)
    {
-          if (Plan::where('slug',$slug)->first()){
+          if (Ceritification::where('slug',$slug)->first()){
                 return response()->json(
                     [
-                        'content'=> new PlanResource(Plan::where('slug',$slug)->first()),
-                        'message'=>'detail Plan',
+                        'content'=> new CeritificationResource(Ceritification::where('slug',$slug)->first()),
+                        'message'=>'detail Ceritification',
                         'status' => false
                     ],
                     200,
@@ -113,7 +92,7 @@ class PlanController extends Controller
 
         return response()->json([
             'message' => 'echec ,
-            Plan does not exist'],
+            Ceritification does not exist'],
             404,
            ['Content-Type'=>'application/json']);
   }
@@ -129,13 +108,13 @@ class PlanController extends Controller
    */
   public function update(Request $request)
   {
-        if (Plan::where('slug',$request->slug)->first()){
-         $plan = Plan::where('slug',$request->slug)->first();
-         if ($plan->update($request->all())){
+        if (Ceritification::where('slug',$request->slug)->first()){
+         $ceritification = Ceritification::where('slug',$request->slug)->first();
+         if ($ceritification->update($request->all())){
 
              return response()->json(
                  [
-                     'message' => ' Plan updated successful !',
+                     'message' => ' Ceritification updated successful !',
                      'status' => true
                  ],200,['Content-Type'=>'application/json']);
          }else{
@@ -148,7 +127,7 @@ class PlanController extends Controller
        }
      }
 
-    return response()->json(['message' => ' Plan does not exist !'],404,['Content-Type'=>'application/json']);
+    return response()->json(['message' => ' Ceritification does not exist !'],404,['Content-Type'=>'application/json']);
    }
 
 
@@ -162,19 +141,19 @@ class PlanController extends Controller
    */
   public function destroy($slug)
    {
-            if (Plan::where('slug',$slug)->first()){
-                  $plan = Plan::where('slug',$slug)->first();
-                  $plan->delete();
+            if (Ceritification::where('slug',$slug)->first()){
+                  $ceritification = Ceritification::where('slug',$slug)->first();
+                  $ceritification->delete();
                   return response()->json(
                       [
-                          'message' => ' Plan deleted successful',
+                          'message' => ' Ceritification deleted successful',
                           'status' => true
                       ],
                       200,
                       ['Content-Type'=>'application/json']);
              }
 
-       return response()->json(['message' => ' Plan does not exist !'],404,['Content-Type'=>'application/json']);
+       return response()->json(['message' => ' Ceritification does not exist !'],404,['Content-Type'=>'application/json']);
    }
 
  /* --Generated with ❤ by slugger---*/

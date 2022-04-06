@@ -42,6 +42,7 @@ class CreateEnterprisesTable extends Migration
                 $table->boolean('verified')->nullable();
                 $table->string('lng')->nullable();
                 $table->string('lat')->nullable();
+                $table->boolean('enterprise_is_configured')->nullable();
 
                 $table->string('slug')->nullable();
                 $table->timestamps();

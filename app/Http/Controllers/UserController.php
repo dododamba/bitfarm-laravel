@@ -8,6 +8,10 @@ use App\Http\Resources\User as UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Picture;
+use App\Models\Ceritification;
+use Carbon\Carbon;
+
+
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -195,6 +199,69 @@ class UserController extends Controller
 
         }
         return response()->json(['message' => ' User does not exist !'],404,['Content-Type'=>'application/json']);
+      }
+
+
+   }
+
+
+
+
+
+   public function profileAccountSetting(Request $request)
+   {
+       if (User::where('slug',$request->slug)->first()){
+          $user = User::where('slug',$request->slug)->first();
+
+          $file =  'bit-farm-image-'.str_randomize(12). '.png';
+          $picture = convertToBase64($request->picture,$file);
+
+          Storage::disk('local')->put($file,$picture);
+
+          copy($picture, public_path().'/projects/'.$picture);
+          unlink($picture);
+
+
+          $file_document =  'bit-farm-document-'.str_randomize(12). '.png';
+          $picture_document = convertToBase64($request->document,$file_document);
+
+          Storage::disk('local')->put($file_document,$picture_document);
+
+          copy($picture_document, public_path().'/projects/'.$picture_document);
+          unlink($picture_document);
+
+
+          $certification = [
+              'document'=>$file_document,
+              'status'=>false,
+              'certified_at'=> Carbon::now(),
+              'user_id'=>$user->id,
+              'slug' => 'certification'.str_randomize(10),
+          ];
+
+          Ceritification::create($certification);
+
+
+           if ($user->update([
+             'avatar' => $file,
+             'birth' => $request->birth,
+             'telephone' => $request->telephone,
+             'account_is_configured' => true
+             ])){
+
+             return response()->json([
+                     'message' => 'Compte configuré avec succès !',
+                     'status' => true
+                 ],200,['Content-Type'=>'application/json']);
+           }else {
+            return response()->json([
+                  'message' => ' updated failed  !',
+                  'status' => false
+              ],200,['Content-Type'=>'application/json']);
+          }
+
+
+          return response()->json(['message' => ' User does not exist !'],404,['Content-Type'=>'application/json']);
       }
 
 

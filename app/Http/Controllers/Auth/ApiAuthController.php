@@ -37,6 +37,7 @@ class ApiAuthController extends Controller
                     'email' => $request->email,
                     'password' => bcrypt($request->password),
                     'status' => true,
+                    'account_is_configured' => false,
                     'remember_token' => str_randomize(30),
                     'confirm_token' => str_randomize(30),
                     'reset_token' => str_randomize(30),
@@ -81,7 +82,7 @@ class ApiAuthController extends Controller
 
 
        if ($validator->fails()){
-           return response(['status' => false,'errors'=>$validator->errors()->all()], 422);
+           return response(['status' => false,'errors'=>$validator->errors()->all()], 200);
        }
 
 
@@ -93,10 +94,11 @@ class ApiAuthController extends Controller
                    'email' => $request->email,
                    'password' => bcrypt($request->password),
                    'status' => true,
+                   'account_is_configured' => false,
                    'remember_token' => str_randomize(30),
                    'confirm_token' => str_randomize(30),
                    'reset_token' => str_randomize(30),
-                   'slug' => 'user-'.str_randomize(10)
+                   'slug' => 'user-'.str_randomize(10),
                ];
 
       if ($user_account = User::create($user)) {
@@ -107,6 +109,7 @@ class ApiAuthController extends Controller
           App\Models\Enterprise::create([
                   'name' => $request->name,
                   'city' => $request->city,
+                  'enterprise_is_configured' => false,
                   'telephone' => $request->telephone,
                   'logo' => 'avatar-enterprise.png',
                   'user_id' => $user_account->id,
