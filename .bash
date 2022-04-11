@@ -30,3 +30,4 @@ php artisan crud:generate Share --fields="user_id:integer,post_id:integer,shared
 php artisan crud:generate View --fields="user_id:integer,post_id:integer"
 
 php artisan crud:generate Ceritification  --fields="document:string,status:boolean,certified_at:date,user_id:integer"
+php artisan crud:generate Transaction  --fields="amount:double,currency:string,status:boolean,user_id:integer,payment_gate_way:integer,token:text"

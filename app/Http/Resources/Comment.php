@@ -29,11 +29,13 @@ class Comment extends Resource
     public function toArray($request)
     {
         return [
-            'content'=>$this->content,'user_id'=>$this->user_id,'post_id'=>$this->post_id,
+            'content'=>$this->content,
+            'user'=> new User($this->author),
+            'post_id'=>$this->post_id,
             'id' => $this->id,
             'slug' => $this->slug,
-            'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
-            'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')
+            'createdAt' => Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans() ,
+            'updatedAt' => Carbon::createFromTimeStamp(strtotime($this->updated_at))->diffForHumans()
 
 
         ];

@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Migration class   CreateLikesTable
@@ -26,17 +26,18 @@ class CreateLikesTable extends Migration
      */
     public function up()
     {
-        
+
             Schema::create('likes', function(Blueprint $table) {
                 $table->increments('id');
-                $table->integer('user_id');
-$table->integer('post_id');
+                $table->integer('user_id')->nullable();
+                $table->integer('post_id')->nullable();
+                $table->integer('comment_id')->nullable();
 
                 $table->string('slug')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             });
-            
+
     }
 
     /**

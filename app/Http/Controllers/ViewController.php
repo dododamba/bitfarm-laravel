@@ -51,6 +51,11 @@ class ViewController extends Controller
    */
   public function store(Request $request)
   {
+    $data =  [
+      'user_id' => $request->user_id,
+      'post_id' => $request->post_id,
+      'slug' => 'bit-farm-share-'.str_randomize(30)
+    ];
      if (View::create($request->all())) {
                 return response()->json(
                     [

@@ -42,7 +42,7 @@ class User extends Resource
             'account_is_configured' => $this->account_is_configured,
             'slug' => $this->slug,
             'certification' => new Ceritification($this->certification),
-            'enterprise' => new Enterprise($this->enterprise),
+            'enterprise' => new EnterpriseResource($this->enterprise),
             'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
             'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')
 

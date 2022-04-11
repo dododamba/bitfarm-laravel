@@ -57,7 +57,15 @@ class LikeController extends Controller
    */
   public function store(Request $request)
   {
-     if (Like::create($request->all())) {
+
+    $data = [
+      'user_id'=> $request->user_id,
+      'post_id'=> $request->post_id,
+      'comment_id'=> $request->comment_id,
+      'slug' => 'bit-farm-like-'.str_randomize(30)
+    ];
+
+     if (Like::create($data)) {
                 return response()->json(
                     [
                         'message' => ' Like stored successful',

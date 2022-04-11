@@ -19,10 +19,10 @@ use App\Htt\Controller\ProjectController;
 
 Route::group(['middleware' => ['app.cors', 'json.response']], function () {
 
-    Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
-    Route::post('/register', 'Auth\ApiAuthController@register')->name('register.api');
-    Route::post('/register-as-enterprise', 'Auth\ApiAuthController@registerEnterprise')->name('registerEnterprise.api');
-    Route::post('/logout', 'Auth\ApiAuthController@logout')->name('login.api');
+    Route::post('/login', 'Auth\ApiAuthController@login');
+    Route::post('/register', 'Auth\ApiAuthController@register');
+    Route::post('/register-as-enterprise', 'Auth\ApiAuthController@registerEnterprise');
+    Route::post('/logout', 'Auth\ApiAuthController@logout');
 
     Route::middleware('auth:api')->group(function () {
 
@@ -40,9 +40,18 @@ Route::group(['middleware' => ['app.cors', 'json.response']], function () {
       	Route::apiResource('role', 'RoleController');
       	Route::apiResource('partner', 'PartnerController');
       	Route::apiResource('picture', 'PictureController');
+        Route::apiResource('post', 'PostController');
+        Route::apiResource('comment', 'CommentController');
+        Route::apiResource('like', 'LikeController');
+        Route::apiResource('share', 'ShareController');
+        Route::apiResource('view', 'ViewController');
+        Route::post('transaction', 'TransactionController@store');
+        Route::get('transaction/{slug}', 'TransactionController@index');
 
 
-        Route::get('project/{slug}/get-enterprises-project', 'ProjectController@connectedUserProjects')->name('ki.api');;
+
+
+        Route::get('project/{slug}/get-enterprises-project', 'ProjectController@connectedUserProjects');
         Route::get('dashboard-mobile', 'DashBoardController@index');
         Route::post('user/profile-picture-update', 'UserController@profile');
 

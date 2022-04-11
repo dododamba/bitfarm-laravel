@@ -51,10 +51,17 @@ class ShareController extends Controller
    */
   public function store(Request $request)
   {
-     if (Share::create($request->all())) {
+     $data =  [
+       'user_id' => $request->user_id,
+       'post_id' => $request->post_id,
+       'shared_on' => $request->shared_on,
+       'slug' => 'bit-farm-share-'.str_randomize(30)
+     ];
+
+     if (Share::create($data)) {
                 return response()->json(
                     [
-                        'message' => ' Share stored successful',
+                        'message' => ' Publication partagée !',
                         'status' => true
                      ],200,['Content-Type'=>'application/json']);
 

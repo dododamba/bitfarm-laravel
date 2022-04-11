@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Model   Share
@@ -22,14 +22,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Share extends Model
 {
 
-    
+
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'post_id', 'shared_on'];
+    protected $fillable = ['user_id', 'post_id', 'shared_on','slug'];
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];

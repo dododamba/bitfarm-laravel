@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Migration class   CreatePostsTable
@@ -26,17 +26,17 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        
+
             Schema::create('posts', function(Blueprint $table) {
                 $table->increments('id');
-                $table->text('content');
-$table->integer('user_id');
+                $table->text('content')->nullable();
+                $table->integer('user_id')->nullable();
 
                 $table->string('slug')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             });
-            
+
     }
 
     /**

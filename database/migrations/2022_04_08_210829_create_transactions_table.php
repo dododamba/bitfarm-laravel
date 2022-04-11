@@ -9,7 +9,7 @@ use Illuminate\Database\Schema\Blueprint;
 |
 |--------------------------------------------------------------------------
 |
-| Migration class   CreateSharesTable
+| Migration class   CreateTransactionsTable
 |
 |
 |
@@ -17,7 +17,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 
 
-class CreateSharesTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -27,11 +27,14 @@ class CreateSharesTable extends Migration
     public function up()
     {
 
-            Schema::create('shares', function(Blueprint $table) {
+            Schema::create('transactions', function(Blueprint $table) {
                 $table->increments('id');
+                $table->double('amount')->nullable();
+                $table->string('currency')->nullable();
+                $table->boolean('status')->nullable();
                 $table->integer('user_id')->nullable();
-                $table->integer('post_id')->nullable();
-                $table->integer('shared_on')->nullable();
+                $table->integer('payment_gate_way')->nullable();
+                $table->text('token');
 
                 $table->string('slug')->nullable();
                 $table->timestamps();
@@ -47,7 +50,7 @@ class CreateSharesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('shares');
+        Schema::drop('transactions');
     }
 
      /* --Generated with ❤ by Slugger ---*/

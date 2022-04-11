@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Model   Like
@@ -22,15 +22,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Like extends Model
 {
 
-    
+
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'post_id'];
+    protected $fillable = ['user_id', 'post_id','comment_id','slug'];
 
+
+            /**
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\HasOne
+             */
+
+            public function author()
+            {
+              return $this->belongsTo(User::class,'user_id');
+            }
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 

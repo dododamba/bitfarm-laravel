@@ -11,14 +11,14 @@ use Illuminate\Http\Resources\Json\JsonResource as Resource;
 |
 |--------------------------------------------------------------------------
 |
-| Resource   Like
+| Resource   Transaction
 |
 |
 |
 |*/
 
 
-class Like extends Resource
+class Transaction extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -29,15 +29,18 @@ class Like extends Resource
     public function toArray($request)
     {
         return [
-            'user'=>new User($this->author),
-            'post_id'=>$this->post_id,
+            'amount'=>$this->amount,
+            'currency'=>$this->currency,
+            'status'=>$this->status,
+            'buyer'=> new User($this->user),
+            'payment_gate_way'=>$this->payment_gate_way,
+            'token'=>$this->token,
             'id' => $this->id,
             'slug' => $this->slug,
-            'createdAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d-m-Y'),
-            'updatedAt' => Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('d-m-Y')
-
-
-        ];
+            'plans' => Plan::collection($this->plans),
+            'createdAt' => Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans() ,
+            'updatedAt' => Carbon::createFromTimeStamp(strtotime($this->updated_at))->diffForHumans()
+         ];
     }
 
      /* --Generated with ❤ by Slugger ---*/

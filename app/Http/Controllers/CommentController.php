@@ -51,7 +51,40 @@ class CommentController extends Controller
    */
   public function store(Request $request)
   {
-     if (Comment::create($request->all())) {
+    $data = [
+      'content'=>$request->content,
+      'user_id'=>$request->user_id,
+      'post_id'=>$request->post_id,
+      'slug' => 'bit-farm-post'.str_randomize(25),
+    ];
+
+    $item;
+
+     if ($item = Comment::create($data)) {
+
+
+
+            if($request->image){
+
+              $file =  'bit-farm-image-'.str_randomize(12). '.png';
+              $picture = convertToBase64($image,$file);
+
+
+             Storage::disk('local')->put($file,$picture);
+
+             copy($picture, public_path().'/projects/'.$picture);
+             unlink($picture);
+
+              Picture::create([
+                  'name' =>  $file,
+                  'slug' => 'media-'.str_randomize(25),
+                  'alt' => $request->name,
+                  'owner' => $item->id
+              ]);
+            }
+
+
+
                 return response()->json(
                     [
                         'message' => ' Comment stored successful',
@@ -78,7 +111,7 @@ class CommentController extends Controller
    */
   public function show($slug)
    {
-          if (Comment::where('slug',$slug)->first()){
+        if (Comment::where('slug',$slug)->first()){
                 return response()->json(
                     [
                         'content'=> new CommentResource(Comment::where('slug',$slug)->first()),

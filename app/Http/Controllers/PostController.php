@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Post as PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
-
+use App\Models\Picture;
+use Storage;
 /*
 |--------------------------------------------------------------------------
 |
@@ -40,7 +41,6 @@ class PostController extends Controller
             'message'=>'list of Posts'
         ],200,['Content-Type'=>'application/json']);
 
-
   }
 
 
@@ -53,19 +53,41 @@ class PostController extends Controller
    */
   public function store(Request $request)
   {
-     if (Post::create($request->all())) {
-                return response()->json(
-                    [
-                        'message' => ' Post stored successful',
-                        'status' => true
-                     ],200,['Content-Type'=>'application/json']);
 
-            }
-     return response()->json(
-         [
-             'message'=>'store Post failed !',
-             'status' => false
-        ],200);
+     $data = [
+       'content'=>$request->content,
+       'user_id'=>$request->user_id,
+       'slug' => 'bit-farm-post'.str_randomize(25),
+     ];
+
+     $item = Post::create($data);
+
+     if($request->images){
+
+         foreach ($request->images as $image) {
+
+             $file =  'bit-farm-image-'.str_randomize(12). '.png';
+             $picture = convertToBase64($image,$file);
+
+
+            Storage::disk('local')->put($file,$picture);
+
+            copy($picture, public_path().'/projects/'.$picture);
+            unlink($picture);
+
+             Picture::create([
+                 'name' =>  $file,
+                 'slug' => 'media-'.str_randomize(25),
+                 'alt' => $request->name,
+                 'owner' => $item->id
+             ]);
+         }
+     }
+
+     return response()->json([
+             'message' => 'Votre publication a été posté !',
+             'status' => true
+          ],200,['Content-Type'=>'application/json']);
   }
 
 
@@ -85,7 +107,7 @@ class PostController extends Controller
                     [
                         'content'=> new PostResource(Post::where('slug',$slug)->first()),
                         'message'=>'detail Post',
-                        'status' => false
+                        'status' => true
                     ],
                     200,
                     ['Content-Type'=>'application/json']

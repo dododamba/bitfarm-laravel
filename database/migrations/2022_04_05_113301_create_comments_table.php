@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Migration class   CreateCommentsTable
@@ -26,18 +26,18 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        
+
             Schema::create('comments', function(Blueprint $table) {
                 $table->increments('id');
-                $table->text('content');
-$table->integer('user_id');
-$table->integer('post_id');
+                $table->text('content')->nullable();
+                $table->integer('user_id')->nullable();
+                $table->integer('post_id')->nullable();
 
                 $table->string('slug')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             });
-            
+
     }
 
     /**

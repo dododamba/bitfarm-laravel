@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 |
 | Model   View
@@ -22,14 +22,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class View extends Model
 {
 
-    
+
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'post_id'];
+    protected $fillable = ['user_id', 'post_id','slug'];
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
